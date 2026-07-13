@@ -1,0 +1,8 @@
+print("Ahoj Vašku!")
+print("Vítej na cestě z kamionu do IT")
+print("Dnes píšu svůj první program v Pythonu")
+print("Je mi 43 let.")
+print("Mým cílem je stát se programátorem.")  
+print("Jmenuji se Vašek.")
+print("20 let jsem řídil kamion.")
+print("Teď se učím Python.")          
