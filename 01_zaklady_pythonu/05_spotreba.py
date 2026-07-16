@@ -18,6 +18,35 @@ naklady = (cena_na_km*dalsi_cesta)
 trzba = dalsi_tkm*cena1
 zisk = trzba -naklady 
 
+def hlavicka():
+    print("============================================")
+    print("           KALKULAČKA KAMIONU")
+    print("============================================")
+
+
+
+
+def vypis_vysledku():
+    print()
+    print("Výsledek")
+    print("--------------------------------------------")
+    print(f"Spotřeba je {spotreba:.2f} l/100km")
+    print()
+    print(f"Nafta stála celkem {cena_celkem:.2f} Kč")
+    print()
+    print(f"Cena na 1 km je {cena_na_km:.2f} Kč")
+    print()
+    print(f"Výkon byl {tkm:.2f} tkm")
+    print()
+    print(f"Sazba je {sazba:.2f} Kč/tkm")
+    print()
+    print(f"Další cesta bude stát {dalsi:.2f} Kč")
+    print()
+    print(f"Výkon na další jízdu je {dalsi_tkm:.2f} tkm")
+    print()
+    print(f"Sazba na další jízdu je {sazba1:.2f} Kč/tkm")
+    print()
+    print(f"Zisk z další jízdy je {zisk:.2f} Kč")
 print()
 print("Výsledek")
 print("--------------------------------------------")
@@ -67,6 +96,10 @@ print()
 print()
 print()
 print("Šťastnou cestu.")    
+
+
+vypis_vysledku()
+hlavicka()
 
 
 
