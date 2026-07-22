@@ -14,6 +14,30 @@ def nacti_kladne_cislo(vyzva):
         
         except ValueError:
             print("Zadej platné číslo")
+
+
+
+def vypis_souhrn(jizdy):
+    if not jizdy:
+        print("Nebyla zadána žádná jízda")
+        return
+    
+    celkem_km = 0
+    celkem_tkm = 0
+
+
+    for jizda in jizdy:
+        celkem_km += jizda["kilometry"]
+        celkem_tkm += jizda['kilometry'] * jizda['hmotnost']
+    prumer_jizdy = celkem_km / len(jizdy)
+        
+    print("            SOUHRN")
+    print("==================================")
+    print(f"Počet jízd: {len(jizdy)}")
+    print(f"Celkem kilometrů: {celkem_km:.2f} km")
+    print(f"Celkem tkm: {celkem_tkm:.2f} tkm")
+    print(f"Průměrná délka jízdy: {prumer_jizdy:.2f} km")
+                
             
 
 
@@ -57,25 +81,13 @@ for poradi, jizda in enumerate(jizdy, start=1):
     print(f"Dopravní výkon {tkm:.2f} tkm")
     print("------------------------------")
 
+
 #5. CELKOVÝ SOUHRN
-if jizdy:
-    celkem_km = 0
-    celkem_tkm = 0
 
 
-    for jizda in jizdy:
-        celkem_km += jizda["kilometry"]
-        celkem_tkm += jizda['kilometry'] * jizda['hmotnost']
-    prumer_jizdy = celkem_km / len(jizdy)
-        
-    print("            SOUHRN")
-    print("==================================")
-    print(f"Počet jízd: {len(jizdy)}")
-    print(f"Celkem kilometrů: {celkem_km:.2f} km")
-    print(f"Celkem tkm: {celkem_tkm:.2f} tkm")
-    print(f"Průměrná délka jízdy: {prumer_jizdy:.2f} km")
+#else:
+#    print("Nebyla zadána žádná jízda.")
 
-else:
-    print("Nebyla zadána žádná jízda.")
+vypis_souhrn(jizdy)    
           
 
