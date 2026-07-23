@@ -28,7 +28,7 @@ def vypis_souhrn(jizdy):
 
     for jizda in jizdy:
         celkem_km += jizda["kilometry"]
-        celkem_tkm += jizda['kilometry'] * jizda['hmotnost']
+        celkem_tkm += spocitej_tkm(jizda["kilometry"], jizda["hmotnost"])
     prumer_jizdy = celkem_km / len(jizdy)
         
     print("            SOUHRN")
@@ -38,7 +38,8 @@ def vypis_souhrn(jizdy):
     print(f"Celkem tkm: {celkem_tkm:.2f} tkm")
     print(f"Průměrná délka jízdy: {prumer_jizdy:.2f} km")
                 
-            
+def spocitej_tkm(kilometry, hmotnost):
+    return kilometry * hmotnost            
 
 
 #2. PŘÍPRAVA DAT
@@ -71,7 +72,9 @@ print("         Přehled jízd")
 print("================================")
 
 for poradi, jizda in enumerate(jizdy, start=1):
-    tkm = jizda["kilometry"] * jizda["hmotnost"]
+
+
+    tkm = spocitej_tkm(jizda["kilometry"], jizda["hmotnost"])
 
 
     print(f"{poradi}. jízda")
