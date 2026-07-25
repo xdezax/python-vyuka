@@ -39,7 +39,12 @@ def vypis_souhrn(jizdy):
     print(f"Průměrná délka jízdy: {prumer_jizdy:.2f} km")
                 
 def spocitej_tkm(kilometry, hmotnost):
-    return kilometry * hmotnost            
+    return kilometry * hmotnost
+
+
+
+def spocitej_cenu_jizdy(jizda):
+    return jizda["kilometry"] * jizda["sazba_za_km"]          
 
 
 #2. PŘÍPRAVA DAT
@@ -57,11 +62,21 @@ while True:
 
     hmotnost = nacti_kladne_cislo("Hmotnost nákladu v tunách: ")
 
+    sazba_za_km = nacti_kladne_cislo("Sazba za kilometr: ")
+
+    palivo = nacti_kladne_cislo("Kolik litrů nafty bylo tankováno: ")
+
+    cena_paliva = nacti_kladne_cislo("Cena nafty: ")
+
+
     jizda = {
         "nakladka": nakladka,
         "vykladka": vykladka,
         "kilometry": kilometry,
         "hmotnost": hmotnost,
+        "sazba_za_km": sazba_za_km,
+        "palivo": palivo,
+        "cena_paliva": cena_paliva,
     }
 
     jizdy.append(jizda)
