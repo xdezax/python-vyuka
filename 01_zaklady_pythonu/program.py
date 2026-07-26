@@ -24,12 +24,22 @@ def vypis_souhrn(jizdy):
     
     celkem_km = 0
     celkem_tkm = 0
-
+    celkem_nafta = 0
+    celkove_naklady = 0
+    celkova_cena_jizd = 0
+    
 
     for jizda in jizdy:
+        celkem_nafta += jizda["palivo"]
         celkem_km += jizda["kilometry"]
         celkem_tkm += spocitej_tkm(jizda["kilometry"], jizda["hmotnost"])
+        celkove_naklady += spocitej_naklady_na_palivo(jizda)
+        celkova_cena_jizd += spocitej_cenu_jizdy(jizda)
+        
     prumer_jizdy = celkem_km / len(jizdy)
+    celkovy_zisk = (celkova_cena_jizd - celkove_naklady)
+    spotreba_prumer = (celkem_nafta / celkem_km) * 100
+   
         
     print("            SOUHRN")
     print("==================================")
@@ -37,6 +47,11 @@ def vypis_souhrn(jizdy):
     print(f"Celkem kilometrů: {celkem_km:.2f} km")
     print(f"Celkem tkm: {celkem_tkm:.2f} tkm")
     print(f"Průměrná délka jízdy: {prumer_jizdy:.2f} km")
+    print(f"Průměrná spotřeba: {spotreba_prumer:.2f} l/100 km")
+    print(f"Celkem natankováno: {celkem_nafta:.2f} l")
+    print(f"Celkové náklady : {celkove_naklady:.2f} Kč")
+    print(f"Celková cena všech jízd: {celkova_cena_jizd:.2f} Kč")
+    print(f"Celkový zisk po odečtení paliva: {celkovy_zisk:.2f} Kč")
                 
 def spocitej_tkm(kilometry, hmotnost):
     return kilometry * hmotnost
@@ -44,7 +59,23 @@ def spocitej_tkm(kilometry, hmotnost):
 
 
 def spocitej_cenu_jizdy(jizda):
-    return jizda["kilometry"] * jizda["sazba_za_km"]          
+    return jizda["kilometry"] * jizda["sazba_za_km"]  
+
+
+def spocitej_naklady_na_palivo(jizda):
+    return jizda["palivo"] * jizda["cena_paliva"]
+
+
+def spocitej_zisk_po_palivu(jizda):
+    cena_jizdy = spocitej_cenu_jizdy(jizda)
+    naklady_na_palivo = spocitej_naklady_na_palivo(jizda)
+
+    return cena_jizdy - naklady_na_palivo
+
+
+
+def spocitej_spotrebu(jizda):
+    return jizda["palivo"] / jizda["kilometry"] * 100
 
 
 #2. PŘÍPRAVA DAT
@@ -91,12 +122,24 @@ for poradi, jizda in enumerate(jizdy, start=1):
 
     tkm = spocitej_tkm(jizda["kilometry"], jizda["hmotnost"])
 
+    cena_jizdy = spocitej_cenu_jizdy(jizda)
+
+    naklady_na_palivo = spocitej_naklady_na_palivo(jizda)
+
+    zisk_po_palivu = spocitej_zisk_po_palivu(jizda)
+
+    spotreba = spocitej_spotrebu(jizda)
+
 
     print(f"{poradi}. jízda")
     print(f"Trasa: {jizda['nakladka']} " f"====> {jizda['vykladka']}")
     print(f"Kilometry: {jizda['kilometry']:.2f} km")
     print(f"Hmotnost: {jizda['hmotnost']:.2f} t")
     print(f"Dopravní výkon {tkm:.2f} tkm")
+    print(f"Cena jízdy: {cena_jizdy:.2f} Kč")
+    print(f"Náklady na palivo: {naklady_na_palivo:.2f} Kč")
+    print(f"Zisk po odečtení paliva: {zisk_po_palivu:.2f} Kč")
+    print(f"Spotřeba: {spotreba:.2f} l/100 km")
     print("------------------------------")
 
 
