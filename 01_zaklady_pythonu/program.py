@@ -75,7 +75,17 @@ def spocitej_zisk_po_palivu(jizda):
 
 
 def spocitej_spotrebu(jizda):
+
     return jizda["palivo"] / jizda["kilometry"] * 100
+
+
+def spocitej_naklad_na_km(jizda):
+
+    return spocitej_naklady_na_palivo(jizda) / jizda["kilometry"]
+
+
+def spocitej_zisk_na_km(jizda):
+    return spocitej_zisk_po_palivu / jizda["kilometry"]
 
 
 #2. PŘÍPRAVA DAT
@@ -130,6 +140,12 @@ for poradi, jizda in enumerate(jizdy, start=1):
 
     spotreba = spocitej_spotrebu(jizda)
 
+    naklad_na_km = spocitej_naklad_na_km(jizda)
+
+    zisk_na_km = spocitej_zisk_na_km(jizda)
+
+
+
 
     print(f"{poradi}. jízda")
     print(f"Trasa: {jizda['nakladka']} " f"====> {jizda['vykladka']}")
@@ -140,6 +156,8 @@ for poradi, jizda in enumerate(jizdy, start=1):
     print(f"Náklady na palivo: {naklady_na_palivo:.2f} Kč")
     print(f"Zisk po odečtení paliva: {zisk_po_palivu:.2f} Kč")
     print(f"Spotřeba: {spotreba:.2f} l/100 km")
+    print(f"Naklady na jeden kilometr: {naklad_na_km:.2f} Kč")
+    print(f"Zisk na jeden kilometr: {zisk_na_km:.2f} Kč")
     print("------------------------------")
 
 
