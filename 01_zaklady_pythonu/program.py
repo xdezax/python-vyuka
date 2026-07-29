@@ -85,7 +85,7 @@ def spocitej_naklad_na_km(jizda):
 
 
 def spocitej_zisk_na_km(jizda):
-    return spocitej_zisk_po_palivu / jizda["kilometry"]
+    return spocitej_zisk_po_palivu(jizda) / jizda["kilometry"]
 
 
 #2. PŘÍPRAVA DAT
