@@ -1,8 +1,13 @@
 import json
+from pathlib import Path
+
+SOUBOR_JIZD = Path(__file__).resolve().parent / "jizdy.json"
 # 1. FUNKCE
 def uloz_jizdy(jizdy):
-    with open("jizdy.json", "w", encoding="utf-8") as soubor:
+    with SOUBOR_JIZD.open("w", encoding="utf-8") as soubor:
         json.dump(jizdy, soubor, ensure_ascii=False, indent=4)
+
+    print(f"Jízdy byly uloženy do souboru: {SOUBOR_JIZD}")    
 
 
 def nacti_kladne_cislo(vyzva):
