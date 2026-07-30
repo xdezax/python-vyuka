@@ -15,7 +15,7 @@ else:
         
     )    
 
-SLOZKA_DAT = Path(os.environ["LOCALAPPDATA"]) / "KamionakuvPomocnik"
+SLOZKA_DAT = zakladni_slozka / "KamionakuvPomocnik"
 SLOZKA_DAT.mkdir(parents=True, exist_ok=True)
 
 SOUBOR_JIZD = SLOZKA_DAT / "jizdy.json"
