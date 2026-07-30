@@ -20,6 +20,60 @@ SLOZKA_DAT.mkdir(parents=True, exist_ok=True)
 
 SOUBOR_JIZD = SLOZKA_DAT / "jizdy.json"
 # 1. FUNKCE
+def nacti_jizdy(cesta_k_souboru):
+    try:
+        with open(cesta_k_souboru, "r", encoding="utf-8") as soubor:
+            nactena_data = json.load(soubor)
+
+        if not isinstance(nactena_data, list):
+            raise SystemExit(
+                "Soubor jizdy.json neobsahuje seznam jízd. "
+                "Program byl ukončen,aby se data nepřepsala."
+            )
+
+        povinne_klice = [
+            "nakladka",
+            "vykladka",
+            "kilometry",
+            "hmotnost",
+            "sazba_za_km",
+            "palivo",
+            "cena_paliva",
+        ]
+
+        for jizda in nactena_data:
+            if not isinstance(jizda, dict):
+                raise SystemExit(
+                    "Soubor obsahuje položku, která není slovníkem jízdy. "
+                    "Program byl ukončen, aby se data nepřepsala."
+                )
+
+            for klic in povinne_klice:
+                if klic not in jizda:
+                    raise SystemExit(
+                        f"V uložené jízdě chybí údaj: {klic}. "
+                        "Program byl ukončen, aby se data nepřepsala."
+                    )
+
+            for klic in ["nakladka"], ["vykladka"]:
+                if not isinstance(jizda[klic], str):
+                    raise SystemExit(
+                        f"Údaj {klic} musí být text. "
+                        "Program byl ukončen, aby se data nepřepsala."                
+                    )    
+
+        return nactena_data
+
+    except FileNotFoundError:
+        return []
+
+    except json.JSONDecodeError:
+        raise SystemExit(
+            f"Soubor {cesta_k_souboru} obsahuje neplatná data. "
+            "Program byl ukončen, aby se uložené jízdy nepřepsaly."
+        )
+        
+
 def uloz_jizdy(jizdy):
     with SOUBOR_JIZD.open("w", encoding="utf-8") as soubor:
         json.dump(jizdy, soubor, ensure_ascii=False, indent=4)
@@ -150,7 +204,7 @@ def najdi_nejvyhodnejsi_jizdu(jizdy):
 
 
 #2. PŘÍPRAVA DAT
-jizdy =[] 
+jizdy = nacti_jizdy(SOUBOR_JIZD) 
 
 #3. ZADÁVÁNÍ JÍZD
 while True:
