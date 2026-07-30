@@ -1,4 +1,10 @@
+import json
 # 1. FUNKCE
+def uloz_jizdy(jizdy):
+    with open("jizdy.json", "w", encoding="utf-8") as soubor:
+        json.dump(jizdy, soubor, ensure_ascii=False, indent=4)
+
+
 def nacti_kladne_cislo(vyzva):
     while True:
         text = input(vyzva).strip().replace(",", ".")
@@ -52,6 +58,9 @@ def vypis_souhrn(jizdy):
     print(f"Celkové náklady : {celkove_naklady:.2f} Kč")
     print(f"Celková cena všech jízd: {celkova_cena_jizd:.2f} Kč")
     print(f"Celkový zisk po odečtení paliva: {celkovy_zisk:.2f} Kč")
+
+
+
                 
 def spocitej_tkm(kilometry, hmotnost):
     return kilometry * hmotnost
@@ -85,7 +94,37 @@ def spocitej_naklad_na_km(jizda):
 
 
 def spocitej_zisk_na_km(jizda):
-    return spocitej_zisk_po_palivu / jizda["kilometry"]
+    return spocitej_zisk_po_palivu(jizda) / jizda["kilometry"]
+
+def najdi_nejdelsi_jizdu(jizdy):
+    if not jizdy:
+        return None
+
+    nejdelsi = jizdy[0]
+
+    for jizda in jizdy:
+        if jizda["kilometry"] > nejdelsi["kilometry"]:
+            nejdelsi = jizda
+
+    return nejdelsi
+
+
+def najdi_nejvyhodnejsi_jizdu(jizdy):
+    if not jizdy:
+        return None
+
+    nejvyhodnejsi = jizdy[0]
+
+    for jizda in jizdy:
+        zisk_jizdy = spocitej_zisk_po_palivu(jizda)
+        zisk_nejvyhodnejsi = spocitej_zisk_po_palivu(nejvyhodnejsi)
+
+        if zisk_jizdy > zisk_nejvyhodnejsi:
+            nejvyhodnejsi = jizda
+
+    return nejvyhodnejsi        
+
+
 
 
 #2. PŘÍPRAVA DAT
@@ -167,6 +206,33 @@ for poradi, jizda in enumerate(jizdy, start=1):
 #else:
 #    print("Nebyla zadána žádná jízda.")
 
-vypis_souhrn(jizdy)    
+vypis_souhrn(jizdy) 
+
+
+nejdelsi_jizda = najdi_nejdelsi_jizdu(jizdy)
+
+if nejdelsi_jizda is not None:
+    print()
+    print("       Nejdelší jízda")
+    print("==============================")
+    print(f"Trasa: {nejdelsi_jizda['nakladka']} "
+          f"===> {nejdelsi_jizda['vykladka']}")
+    print(f"Kilometry: "f"{nejdelsi_jizda['kilometry']:.2f} km")
+
+
+
+nejvyhodnejsi_jizda = najdi_nejvyhodnejsi_jizdu(jizdy)
+
+if nejvyhodnejsi_jizda is not None:
+    zisk = spocitej_zisk_po_palivu(nejvyhodnejsi_jizda)
+
+
+    print()
+    print("    Nejvýhodnější jízda")
+    print("============================")
+    print(f"Trasa: {nejvyhodnejsi_jizda['nakladka']} " f"====> {nejvyhodnejsi_jizda['vykladka']}")
+    print(f"Zisk po odečtení paliva: {zisk:.2f} Kč")
+
+uloz_jizdy(jizdy)    
           
 
