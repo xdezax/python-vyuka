@@ -1,7 +1,24 @@
 import json
+import os
 from pathlib import Path
 
-SOUBOR_JIZD = Path(__file__).resolve().parent / "jizdy.json"
+if os.name == "nt":
+    #Windows
+    zakladni_slozka = Path(os.environ["LOCALAPPDATA"])
+else:
+    #Linux
+    zakladni_slozka = Path(
+        os.environ.get(
+            "XDG_DATA_HOME",
+            Path.home() / ".local" / "share"
+        )
+        
+    )    
+
+SLOZKA_DAT = Path(os.environ["LOCALAPPDATA"]) / "KamionakuvPomocnik"
+SLOZKA_DAT.mkdir(parents=True, exist_ok=True)
+
+SOUBOR_JIZD = SLOZKA_DAT / "jizdy.json"
 # 1. FUNKCE
 def uloz_jizdy(jizdy):
     with SOUBOR_JIZD.open("w", encoding="utf-8") as soubor:
